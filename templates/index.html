@@ -3,10 +3,13 @@
 <head>
     <title>SuperScrapers</title>
     <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/stage.css') }}">
 </head>
 <body>
+
   <header>
       <div class="header-container">
+
           <div class="burger-menu">
               <input type="checkbox" id="toggle">
               <label for="toggle" class="burger-icon">
@@ -15,40 +18,64 @@
                   <span></span>
               </label>
               <ul class="menu">
-                  <li><a href="#">Upload</a></li>
+                  <li>Upload</li>
               </ul>
           </div>
-            <img src="{{ url_for('static', path='/img/swarm.png') }}" alt="Bee">
+
+            <img class="logo-pos"src="{{ url_for('static', path='/img/swarm.png') }}" alt="Bee">
             <div class="profile">
                 <div class="current-name">Имя пользователя</div>
                 <img src="{{ url_for('static', path='/img/user.png') }}" alt="Bee">
             </div>
+
       </div>
   </header>
+
   <main>
-      <aside>
-          <div class="aside-inside">
-              <p class="upl">Board</p>
-              <div class="aside-menu-item" onclick="toggleStyles(this)">
-                  <img src="{{ url_for('static', path='/img/cloud-storage.png') }}" alt="Bee">
-                  Upload
+      <div class="flex-controller">
+          <aside>
+              <div class="aside-inside">
+                  <p class="upl">Board</p>
+                  <div class="aside-menu-item" onclick="toggleStyles(this)">
+                      <img src="{{ url_for('static', path='/img/cloud-storage.png') }}" alt="Bee">
+                      Upload
+                  </div>
+              </div>
+          </aside>
+          <div class="stage">
+              <div class="insider-stage">
+                  //UPLOADER
+                  <div class="upload-container">
+                      <form class="csvForm" enctype="multipart/form-data">
+                          <input type="file" id="csvFile" accept=".csv" required>
+                      </form>
+                  </div>
+                  //OPTIONS
+                  <div class="container-option">
+                      <div class="icon"></div>
+                      <p>Website:</p>
+                      <select>
+                          <option value="option1">Option 1</option>
+                          <option value="option2">Option 2</option>
+                      </select>
+                  </div>
+
               </div>
           </div>
-      </aside>
+      </div>
   </main>
+
   <footer class="footer">
       <div class="wrapper">
-          <!-- Ваш контент веб-страницы здесь -->
-
-          <!-- Футер -->
           <footer class="footer">
               <div class="footer-content">
                   <p>Ваш текст футера здесь</p>
                   <p>Контактная информация, ссылки или другая дополнительная информация</p>
               </div>
           </footer>
-      </div> <!-- Закрытие враппера -->
+      </div>
   </footer>
+
   <script>
       const burgerIcon = document.querySelector('.burger-icon');
       const menu = document.querySelector('.menu');
@@ -66,5 +93,6 @@
           }
       }
   </script>
+
 </body>
 </html>

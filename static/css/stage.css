@@ -1,0 +1,140 @@
+.flex-controller {
+    display: flex;
+    width: 100%;
+}
+
+.stage {
+    width: 1225px;
+    height: 500px;
+    padding: 20px 0px 20px 0px;
+    background-color: #f0e6d9;
+    border-radius: 15px;
+    box-shadow: 1px 1px 15px -5px grey;
+}
+
+.insider-stage {
+    padding: 20px 30px;
+}
+
+aside {
+    width: 200px;
+    height: 500px;
+    background-color: #f0e6d9;
+    border-radius: 15px;
+    box-shadow: 1px 1px 15px -5px grey;
+    margin-left: 10px;
+    margin-right: 17px;
+    padding: 20px 30px;
+}
+
+.aside-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.aside-menu-item img{
+    padding-right: 10px;
+}
+
+.aside-menu-item.clicked {
+    background: #A0E3CC;
+}
+
+.upl {
+    font-size: 18px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    padding-bottom: 10px;
+}
+
+
+.upload-container {
+    display: block;
+}
+
+.csvForm input[type="file"] {
+    position: relative;
+    margin: 15px 0;
+    width: 60%;
+}
+
+.csvForm input[type="file"]::file-selector-button {
+    width: 136px;
+    color: transparent;
+}
+
+.csvForm input[type="file"]::before {
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    left: 16px;
+    height: 20px;
+    width: 20px;
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
+}
+
+.csvForm input[type="file"]::after {
+    content: "Upload File";
+    position: absolute;
+    pointer-events: none;
+    top: 13px;
+    left: 40px;
+    font-weight: 600;
+}
+
+.csvForm input[type="file"]::file-selector-button {
+    border-radius: 4px;
+    padding: 0 16px;
+    height: 40px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    margin-right: 16px;
+    transition: background-color 200ms;
+}
+
+.csvForm {
+    display: flex;
+    padding: 5px 0;
+    align-items: center;
+}
+
+.csvForm input[type="file"]::file-selector-button:hover {
+    background-color: #f3f4f6;
+}
+
+.csvForm input[type="file"]::file-selector-button:active {
+    background-color: #e5e7eb;
+}
+
+.csvForm button {
+    width: fit-content;
+    padding: 12.5px 20px;
+    background-color: #f0e6d9;
+    color: black;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.container-option {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+select {
+
+}
