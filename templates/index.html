@@ -5,21 +5,66 @@
     <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
 </head>
 <body>
-    <header>
-        <nav>
-<!--            <div class="BurgerMenu">-->
-<!--                <span class=""></span>-->
-<!--            </div>-->
-            <div class="MainLogo">
-                <img src="{{ url_for('static', path='/img/swarm128.png') }}" alt="Bee">
+  <header>
+      <div class="header-container">
+          <div class="burger-menu">
+              <input type="checkbox" id="toggle">
+              <label for="toggle" class="burger-icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </label>
+              <ul class="menu">
+                  <li><a href="#">Upload</a></li>
+              </ul>
+          </div>
+            <img src="{{ url_for('static', path='/img/swarm.png') }}" alt="Bee">
+            <div class="profile">
+                <div class="current-name">Имя пользователя</div>
+                <img src="{{ url_for('static', path='/img/user.png') }}" alt="Bee">
             </div>
-            <div class="ProfileStatus">
+      </div>
+  </header>
+  <main>
+      <aside>
+          <div class="aside-inside">
+              <p class="upl">Board</p>
+              <div class="aside-menu-item" onclick="toggleStyles(this)">
+                  <img src="{{ url_for('static', path='/img/cloud-storage.png') }}" alt="Bee">
+                  Upload
+              </div>
+          </div>
+      </aside>
+  </main>
+  <footer class="footer">
+      <div class="wrapper">
+          <!-- Ваш контент веб-страницы здесь -->
 
-            </div>
-        </nav>
-    </header>
-    <footer>
+          <!-- Футер -->
+          <footer class="footer">
+              <div class="footer-content">
+                  <p>Ваш текст футера здесь</p>
+                  <p>Контактная информация, ссылки или другая дополнительная информация</p>
+              </div>
+          </footer>
+      </div> <!-- Закрытие враппера -->
+  </footer>
+  <script>
+      const burgerIcon = document.querySelector('.burger-icon');
+      const menu = document.querySelector('.menu');
 
-    </footer>
+      burgerIcon.addEventListener('click', () => {
+          menu.classList.toggle('active');
+          burgerIcon.classList.toggle('active');
+      });
+
+      function toggleStyles(element) {
+          if (element.classList.contains("clicked")) {
+              element.classList.remove("clicked");
+          } else {
+              element.classList.add("clicked");
+          }
+      }
+  </script>
 </body>
 </html>
