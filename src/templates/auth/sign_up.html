@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('auth_static', path='/css/styles.css') }}">
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div>
+
+          <div class="form-container">
+            <div>
+              <div class="container-google">
+                <a href="/auth/google" class="google-button">
+                    <img src="{{ url_for('auth_static', path='/img/google.png') }}">
+                    Sign up with Google
+                </a>
+              </div>
+              <form method="post" class="login-form">
+                <p>Sign up an account</p>
+                <div class="field-cont">
+                  <input type="email" name="email" class="login-field" placeholder="E-mail" />
+                </div>
+                <div class="field-cont">
+                  <input type="password" name="password" class="login-field" placeholder="Password" />
+                </div>
+                <div class="field-cont">
+                  <button type="submit">Sign up</button>
+
+                </div>
+                <div class="sign-up">
+                  <p>Already have an acoount?</p>
+                  <a href="login">Log in here</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

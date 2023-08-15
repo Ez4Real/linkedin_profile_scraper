@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>SuperScrapers</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/stage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('panel_static', path='/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('panel_static', path='/css/stage.css') }}">
 </head>
 <body>
 
@@ -22,10 +22,11 @@
               </ul>
           </div>
 
-            <img class="logo-pos"src="{{ url_for('static', path='/img/swarm.png') }}" alt="Bee">
+            <img class="logo-pos"src="{{ url_for('panel_static', path='/img/swarm.png') }}" alt="Bee">
             <div class="profile">
-                <div class="current-name">email</div>
-                <img src="{{ url_for('static', path='/img/user.png') }}" alt="Bee">
+                <div class="current-name">{{ user }}</div>
+                <a href="auth/logout">Logout</a>
+                <img src="{{ url_for('panel_static', path='/img/user.png') }}" alt="Bee">
             </div>
 
       </div>
@@ -37,7 +38,7 @@
               <div class="aside-inside">
                   <p class="upl">Panel</p>
                   <div class="aside-menu-item" onclick="toggleStyles(this)">
-                      <img src="{{ url_for('static', path='/img/cloud-storage.png') }}" alt="Bee">
+                      <img src="{{ url_for('panel_static', path='/img/cloud-storage.png') }}" alt="Bee">
                       Upload
                   </div>
               </div>
