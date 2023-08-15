@@ -3,6 +3,7 @@ anyio==3.7.1
 click==8.1.6
 colorama==0.4.6
 dnspython==2.4.1
+email-validator==2.0.0.post2
 exceptiongroup==1.1.2
 fastapi==0.101.0
 h11==0.14.0
