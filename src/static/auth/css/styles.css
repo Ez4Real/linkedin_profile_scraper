@@ -125,3 +125,7 @@ a {
 .container-google a {
     display: flex;
 }
+
+.error-messages {
+    top: 10% !important
+}

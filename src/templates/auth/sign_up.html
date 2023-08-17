@@ -6,8 +6,16 @@
   <body>
     <main>
       <div class="container">
+        {% if error_messages %}
+        <div class="error-messages">
+          <ul>
+            {% for error in error_messages %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
         <div>
-
           <div class="form-container">
             <div>
               <div class="container-google">
@@ -19,10 +27,10 @@
               <form method="post" class="login-form">
                 <p>Sign up an account</p>
                 <div class="field-cont">
-                  <input type="email" name="email" class="login-field" placeholder="E-mail" />
+                  <input type="email" name="email" class="login-field" placeholder="E-mail" required/>
                 </div>
                 <div class="field-cont">
-                  <input type="password" name="password" class="login-field" placeholder="Password" />
+                  <input type="password" name="password" class="login-field" placeholder="Password" required/>
                 </div>
                 <div class="field-cont">
                   <button type="submit">Sign up</button>
