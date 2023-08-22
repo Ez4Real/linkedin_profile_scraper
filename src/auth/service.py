@@ -1,15 +1,17 @@
-import bcrypt
 from pydantic import EmailStr
 
 from database import user_collection
 
-from .models import User
+from .models import UserInDB
+from .utils import hash_password
 
 
 async def get_user_by_email(email: EmailStr):
     return await user_collection.find_one({"email": email})
 
+async def get_user_by_id(id: str):
+    return await user_collection.find_one({"_id": id})
+
 async def create_user(email: EmailStr, password: str):
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    user = User(email=email, hashed_password=hashed_password)
+    user = UserInDB(email=email, hashed_password=hash_password(password))
     return await user_collection.insert_one(dict(user))

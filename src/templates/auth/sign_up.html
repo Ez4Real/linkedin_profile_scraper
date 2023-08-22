@@ -6,10 +6,10 @@
   <body>
     <main>
       <div class="container">
-        {% if error_messages %}
-        <div class="error-messages">
+        {% if messages %}
+        <div class="messages">
           <ul>
-            {% for error in error_messages %}
+            {% for error in messages %}
             <li>{{ error }}</li>
             {% endfor %}
           </ul>

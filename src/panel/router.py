@@ -10,4 +10,4 @@ templates = Jinja2Templates(directory="templates/panel")
 
 @panel_router.get("/", response_class=HTMLResponse)
 async def panel(request: Request, user: dict = Depends(get_current_user)):
-    return templates.TemplateResponse("panel.html", {"request": request, "user": user})
+    return templates.TemplateResponse("panel.html", {"request": request, "current_user": user['email']})

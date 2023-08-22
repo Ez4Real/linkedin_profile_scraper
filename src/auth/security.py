@@ -1,44 +1,42 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-
-import bcrypt
 from jose import JWTError, jwt
+from pydantic import ValidationError
 
 from config import HASH_ALGORITHM, JWT_SECRET
+
+from .schemas import TokenPayload
 from .service import get_user_by_email
 
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
-
-
-def verify_token(plain_password: str, hashed_password: str) -> bool:
-    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
-
-def create_access_token(data: dict, expires_delta: timedelta) -> str:
-    to_encode = data.copy()
-    expire = datetime.utcnow() + expires_delta
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=HASH_ALGORITHM)
-    return encoded_jwt
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl="auth/login",
+    scheme_name="JWT"
+)
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[HASH_ALGORITHM])
-        email: str = payload.get("sub")
-        if email is None:
-            raise credentials_exception
-    except JWTError:
-        raise credentials_exception
-
-    user = await get_user_by_email(email)
-    if user is None:
-        raise credentials_exception
-
+        token_data = TokenPayload(**payload)
+        if datetime.fromtimestamp(token_data.exp) < datetime.now():
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token expired",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+    except (JWTError, ValidationError):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    user = await get_user_by_email(token_data.sub)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Could not find user",
+        )
+    
     return user
