@@ -24,7 +24,7 @@
 
             <img class="logo-pos"src="{{ url_for('panel_static', path='/img/swarm.png') }}" alt="Bee">
             <div class="profile">
-                <div class="current-name">{{ user }}</div>
+                <div class="current-name">{{ current_user }}</div>
                 <a href="auth/logout">Logout</a>
                 <img src="{{ url_for('panel_static', path='/img/user.png') }}" alt="Bee">
             </div>

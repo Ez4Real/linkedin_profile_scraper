@@ -1,13 +1,16 @@
-from fastapi import APIRouter, Request, Depends, HTTPException, status, Form, Response
+from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.security import OAuth2PasswordRequestForm
 
 from config import DEBUG
 
 from .service import create_user, get_user_by_email
-from .schemas import TokenSchema
-from .utils import  verify_password, create_access_token, create_refresh_token
+from .utils import (verify_password,
+                    set_success_message, 
+                    set_error_message, set_error_messages,
+                    pop_get_error_message, pop_get_error_messages,
+                    pop_get_success_message)
+from .security import create_access_token
 from .models import UserSignUp
 
 
@@ -15,9 +18,12 @@ auth_router = APIRouter()
 templates = Jinja2Templates(directory='templates/auth')
 
 
+LOGIN_REDIRECT = RedirectResponse(url='/auth/login', status_code=302)
+
+
 @auth_router.get('/signup', response_class=HTMLResponse)
 async def get_signup(request: Request):
-    messages = request.session.pop('error_messages', None)
+    messages = pop_get_error_messages(request)
     
     return templates.TemplateResponse(
         'sign_up.html',
@@ -31,69 +37,59 @@ async def post_signup(request: Request,
     existing_user = await get_user_by_email(email)
     
     if existing_user:
-        request.session['error_messages'] = ['User with this email already exists']
+        set_error_messages(request, ['User with this email already exists'])
     else:
         try:
             UserSignUp(email=email, password=password)
         except ValueError as e:
-            error_messages = [error['msg'] for error in e.errors()]
-            request.session['error_messages'] = error_messages
+            set_error_messages(request, [error['msg'] for error in e.errors()])
         else:
             await create_user(email, password)
-            request.session['success_message'] = 'User registration successful'
-            return RedirectResponse(url='/auth/login', status_code=status.HTTP_302_FOUND)
+            set_success_message(request, 'User successfully created')
+            return LOGIN_REDIRECT
 
-    return RedirectResponse(url='/auth/signup', status_code=status.HTTP_302_FOUND)
+    return RedirectResponse(url='/auth/signup', status_code=302)
 
 
 @auth_router.get('/login', response_class=HTMLResponse)
 async def get_login(request: Request,
                     message: str = None):
-    error_message = request.session.pop('error_message', None)
+    error_message = pop_get_error_message(request)
     if not error_message:
-        message = request.session.pop('success_message', None)
+        message = pop_get_success_message(request)
         
     return templates.TemplateResponse(
         'login.html',
         {'request': request, 'message': message, 'error_message': error_message}
     )
-    
 
-# @auth_router.post('/login')
-# async def post_login(request: Request,
-#                      email: str = Form(...),
-#                      password: str = Form(...)):
-#     user = await get_user_by_email(email)
-#     if not user:
-#         request.session['error_message'] = 'User with this e-mail address does not exist'
-#     else:
-#         if not verify_password(password, user['hashed_password']):
-#             request.session['error_message'] = 'Incorrect email or password'
-#         else: 
-#             access_token = create_access_token(email)
-#             response = RedirectResponse(url='/', status_code=status.HTTP_302_FOUND)
-#             response.set_cookie(key="access_token", value=f"Bearer {access_token}", httponly=True)
-#             return response
-            
-#     return RedirectResponse(url='/auth/login', status_code=status.HTTP_302_FOUND)
-
-
-@auth_router.post('/login', response_model=TokenSchema)
-async def post_login(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = await get_user_by_email(form_data.username)
+@auth_router.post('/login')
+async def post_login(request: Request,
+                     email: str = Form(...),
+                     password: str = Form(...)):
+    user = await get_user_by_email(email)
     if not user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Incorrect email'
-        )
+        set_error_message(request, 'User with this e-mail address does not exist')
+    else:
+        if not verify_password(password, user['hashed_password']):
+            set_error_message(request, 'Incorrect email or password')
+        else: 
+            access_token = create_access_token(email)
+            response = RedirectResponse(url='/', status_code=302)
+            response.set_cookie(
+                key="Authorization",
+                value=f"Bearer {access_token}",
+                httponly=True,
+                secure=not DEBUG,
+                samesite='lax'
+            )
+            return response
+            
+    return LOGIN_REDIRECT
 
-    if not verify_password(form_data.password, user['hashed_password']):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Incorrect password'
-        )
-        
-    return {
-        'access_token': create_access_token(user['email']),
-        'refresh_token': create_refresh_token(user['email']),
-    }
+
+@auth_router.get('/logout')
+async def logout(request: Request):
+    response = LOGIN_REDIRECT
+    response.delete_cookie('Authorization')
+    return response

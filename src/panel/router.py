@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse
 
 from auth.security import get_current_user
 
