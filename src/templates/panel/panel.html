@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SuperScrapers</title>
+    <title>Scraper Panel</title>
     <link rel="stylesheet" href="{{ url_for('panel_static', path='/css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('panel_static', path='/css/stage.css') }}">
 </head>
@@ -18,14 +18,13 @@
                   <span></span>
               </label>
               <ul class="menu">
-                  <li>Upload</li>
+                  <a href="auth/logout"><li>Logout</li></a>
               </ul>
           </div>
 
-            <img class="logo-pos"src="{{ url_for('panel_static', path='/img/swarm.png') }}" alt="Bee">
+            <img class="logo-pos" src="{{ url_for('panel_static', path='/img/swarm.png') }}" alt="Bee">
             <div class="profile">
                 <div class="current-name">{{ current_user }}</div>
-                <a href="auth/logout">Logout</a>
                 <img src="{{ url_for('panel_static', path='/img/user.png') }}" alt="Bee">
             </div>
 
@@ -43,26 +42,33 @@
                   </div>
               </div>
           </aside>
-          <div class="stage">
-              <div class="insider-stage">
-                  //UPLOADER
-                  <div class="upload-container">
-                      <form class="csvForm" enctype="multipart/form-data">
-                          <input type="file" id="csvFile" accept=".csv" required>
-                      </form>
-                  </div>
-                  //OPTIONS
-                  <div class="container-option">
-                      <div class="icon"></div>
-                      <p>Website:</p>
-                      <select>
-                          <option value="option1">Option 1</option>
-                          <option value="option2">Option 2</option>
-                      </select>
-                  </div>
 
-              </div>
+          <div class="stage">
+            <form class="csvForm" enctype="multipart/form-data">
+                <div class="upload-container step-container" id="step1">
+                        <input type="file" id="csvFile" accept=".csv" required>
+                </div>
+            
+                <!-- Step 2: Field Mapping -->
+                <div class="mapping-container step-container" id="step2" >
+                    <img class="map-icon" src="{{ url_for('panel_static', path='/img/chain.png') }}"></img>
+                    <p>Field Name</p>
+                    <select>
+                        <option value="website">Website</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="angelco">Angel.co</option>
+                    </select>
+                </div>
+            
+                <!-- Step 3: Prioritization -->
+                <div class="priority-container" id="step3" >
+                    <button type="submit" id="submitButton" style="display: none;">Submit</button>
+                </div>
+            
+            </form>
           </div>
+
       </div>
   </main>
 
@@ -77,23 +83,7 @@
       </div>
   </footer>
 
-  <script>
-      const burgerIcon = document.querySelector('.burger-icon');
-      const menu = document.querySelector('.menu');
-
-      burgerIcon.addEventListener('click', () => {
-          menu.classList.toggle('active');
-          burgerIcon.classList.toggle('active');
-      });
-
-      function toggleStyles(element) {
-          if (element.classList.contains("clicked")) {
-              element.classList.remove("clicked");
-          } else {
-              element.classList.add("clicked");
-          }
-      }
-  </script>
-
+  <script src="{{ url_for('panel_static', path='/js/burgerToggle.js') }}"></script>
+  
 </body>
 </html>
