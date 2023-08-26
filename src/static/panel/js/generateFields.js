@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
     const csvFileInput = document.getElementById("csvFile");
     const mappingContainer = document.querySelector(".mapping-container");
-    const priorityContainer = document.querySelector(".priorFieldContainer");
+    const priorityContainer = document.querySelector(".priority-container");
 
-    // Show or hide Next button based on CSV upload
+
     csvFileInput.addEventListener("change", function () {
-        // Get headers from the uploaded CSV
+        mappingContainer.innerHTML = "";
+        priorityContainer.innerHTML = "";
+
         const file = csvFileInput.files[0];
         const reader = new FileReader();
 
@@ -15,19 +17,20 @@ document.addEventListener("DOMContentLoaded", function () {
             const headers = lines[0].split(",");
             const numColumns = headers.length;
 
-            let currentPriority = 1; // Initialize priority value
+            let currentPriority = 1;
 
-            // Draw HTML for each column header
             for (let i = 0; i < numColumns; i++) {
                 const header = headers[i];
                 const mapColumnHTML = document.createElement("div");
                 const priorColumnHTML = document.createElement("div");
                 mapColumnHTML.className = "mapfield-container";
                 priorColumnHTML.className = "mapfield-container";
-                const readonlyField = `<input type="text" value=${header} readonly>`
+                const readonlyField = `<p>${header}</p>`;
                 mapColumnHTML.innerHTML = `
-                    <img class="map-icon" src=${imagePaths.chain}></img>
-                    ${readonlyField}
+                    <div class="mapfield-wrapper">
+                        <img class="map-icon" src=${imagePaths.chain}></img>
+                        ${readonlyField}
+                    </div>
                     <select>
                         <option value="" hidden selected>Select an option</option>
                         <option value="website">Website</option>
@@ -37,25 +40,30 @@ document.addEventListener("DOMContentLoaded", function () {
                     </select>
                 `;
                 priorColumnHTML.innerHTML = `
+                <div class="mapfield-ineed">
                     ${readonlyField}
-                    <select>
-                        ${generatePriorityOptions(currentPriority, numColumns)}
-                    </select>
-                    <p>Need Scraping</p>
+                    <div class="mapfield-ineed__controller">
+                        <p>Priority:</p>
+                        <select data-priority=${currentPriority}>
+                            ${generatePriorityOptions(currentPriority, numColumns)}
+                        </select>
+                    </div>
+                </div>
+                <div class="needer">
+                    <p>Need Scraping:</p>
                     <input type="checkbox" checked>
+                </div>
                 `;
-
                 mappingContainer.appendChild(mapColumnHTML);
                 priorityContainer.appendChild(priorColumnHTML);
 
-                currentPriority++;
+                currentPriority++; 
             }
         };
         reader.readAsText(file);
     });
 });
 
-// Function to generate priority options dynamically
 function generatePriorityOptions(currentPriority, numColumns) {
     let options = '';
     for (let i = 1; i <= numColumns; i++) {
@@ -63,3 +71,4 @@ function generatePriorityOptions(currentPriority, numColumns) {
     }
     return options;
 }
+

@@ -1,6 +1,23 @@
+input {
+    margin: 20px 0;
+}
+
+form > div {
+    padding: 10px 0;
+}
+
+.stage-tittle {
+    font-size: 16px;
+}
+
 .flex-controller {
     display: flex;
     width: 100%;
+    height: 100%;
+}
+
+.map-icon {
+    margin-right: 15px;
 }
 
 .stage {
@@ -18,7 +35,6 @@
 
 aside {
     width: 200px;
-    height: 500px;
     background-color: #f0e6d9;
     border-radius: 15px;
     box-shadow: 1px 1px 15px -5px grey;
@@ -57,6 +73,7 @@ aside {
 }
 
 .csvForm input[type="file"] {
+    color: transparent;
     position: relative;
     margin: 15px 0;
     width: 60%;
@@ -73,7 +90,7 @@ aside {
     position: absolute;
     pointer-events: none;
     top: 10px;
-    left: 16px;
+    left: 10px;
     height: 20px;
     width: 20px;
 }
@@ -82,9 +99,11 @@ aside {
     content: "Upload CSV File";
     position: absolute;
     pointer-events: none;
-    top: 13px;
-    left: 40px;
+    top: 14px;
+    left: 39px;
     font-weight: 600;
+    color: #0964B0;
+    font-size: 11px;
 }
 
 .csvForm input[type="file"]::file-selector-button {
@@ -117,8 +136,8 @@ aside {
 .csvForm button {
     width: fit-content;
     padding: 12.5px 20px;
-    background-color: #f0e6d9;
-    color: black;
+    background-color: white;
+    color: #0964B0;
     font-weight: 600;
     border: none;
     border-radius: 5px;
@@ -126,23 +145,86 @@ aside {
     transition: background-color 0.3s ease;
 }
 
-.mapping-container {
+.mapping-container, .priority-container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: 100%;
 }
 
 .mapfield-container {
     display: flex;
+    justify-content: space-between;
+    width: 35%;
+    align-items: stretch;
+    margin: 15px 0;
+}
+.priorFieldContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-.mapfield-container input {
-    margin: 0 10px;
+.mapfield-ineed {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.mapfield-ineed p {
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.mapfield-ineed__controller {
+    display: flex;
+    align-items: baseline;
+}
+
+.mapfield-ineed > p {
+    text-decoration: underline;
+}
+
+body .mapfield-ineed__controller select {
+    padding: 7px 11px ;
+}
+
+.mapfield-container select {
+    border: none;
+    border-radius: 4px;
+    background: white;
+    padding: 10px 25px;
+    color: #0964B0;
+}
+
+.mapfield-container select option {
+    padding: 10px;
+    position: relative;
+    top: 5px;
+    border-radius: 4px;
+}
+
+.mapfield-container select:focus-within {
+    outline: none;
+}
+
+.needer {
+    display: flex;
+    align-items: flex-end;
+    height: 65px;
+}
+
+.needer input {
+    margin: 0 0 2px 14px;
+}
+
+.mapfield-wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .map-icon {
     width: 25px;
 }
-
