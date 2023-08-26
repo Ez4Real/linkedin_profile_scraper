@@ -3,6 +3,7 @@
   <head>
     <title>Sign up</title>
     <link rel="stylesheet" href="{{ url_for('auth_static', path='/css/styles.css') }}">
+    <script src="{{ url_for('auth_static', path='/js/userMessages.js') }}"></script>
   </head>
   <body>
     <main>
@@ -11,12 +12,13 @@
         <div class="messages">
           <ul>
             {% for error in messages %}
-            <li>{{ error }}</li>
+            <li class="error-message">{{ error }}</li>
             {% endfor %}
           </ul>
         </div>
         {% endif %}
-        <div>
+
+        <div class="positioner">
           <div class="form-container">
             <div>
               <div class="container-google">

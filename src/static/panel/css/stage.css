@@ -52,7 +52,8 @@ aside {
 
 
 .upload-container {
-    display: block;
+    display: flex;
+    justify-content: center;
 }
 
 .csvForm input[type="file"] {
@@ -67,18 +68,18 @@ aside {
 }
 
 .csvForm input[type="file"]::before {
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
     position: absolute;
     pointer-events: none;
     top: 10px;
     left: 16px;
     height: 20px;
     width: 20px;
-    content: "";
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
 }
 
 .csvForm input[type="file"]::after {
-    content: "Upload File";
+    content: "Upload CSV File";
     position: absolute;
     pointer-events: none;
     top: 13px;
@@ -100,7 +101,6 @@ aside {
 
 .csvForm {
     display: flex;
-    padding: 5px 0;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -126,14 +126,20 @@ aside {
     transition: background-color 0.3s ease;
 }
 
-.step-container {
+.mapping-container {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
-.mapping-container p {
-    padding: 0 10px;
+.mapfield-container {
+    display: flex;
+    align-items: center;
+}
+
+.mapfield-container input {
+    margin: 0 10px;
 }
 
 .map-icon {

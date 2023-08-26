@@ -50,21 +50,22 @@
                 </div>
             
                 <!-- Step 2: Field Mapping -->
-                <div class="mapping-container step-container" id="step2" >
-                    <img class="map-icon" src="{{ url_for('panel_static', path='/img/chain.png') }}"></img>
-                    <p>Field Name</p>
-                    <select>
-                        <option value="website">Website</option>
-                        <option value="linkedin">LinkedIn</option>
-                        <option value="facebook">Facebook</option>
-                        <option value="angelco">Angel.co</option>
-                    </select>
+                <div class="mapping-container" id="step2" >
                 </div>
             
                 <!-- Step 3: Prioritization -->
                 <div class="priority-container" id="step3" >
-                    <button type="submit" id="submitButton" style="display: none;">Submit</button>
+                    <div class="priorFieldContainer">
+                    </div>
                 </div>
+
+                <div class="buttons-container">
+                    <button class="back-button" style="display: none;">Back</button>
+                    <button class="next-button">Next</button>
+
+                    <button id="submitButton" style="display: none;">Submit</button>
+                </div>
+                
             
             </form>
           </div>
@@ -83,7 +84,13 @@
       </div>
   </footer>
 
+  <script>
+    const imagePaths = {
+        chain: "{{ url_for('panel_static', path='/img/chain.png') }}"
+    };
+  </script>
   <script src="{{ url_for('panel_static', path='/js/burgerToggle.js') }}"></script>
+  <script src="{{ url_for('panel_static', path='/js/generateFields.js') }}"></script>
   
 </body>
 </html>
