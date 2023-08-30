@@ -50,19 +50,19 @@
                 </div>
             
                 <!-- Step 2: Field Mapping -->
-                <div class="mapping-container" id="step2" >
+                <div class="mapping-container step-container" id="step2" style="display: none;">
                 </div>
             
                 <!-- Step 3: Prioritization -->
-                <div class="priority-container" id="step3" >
+                <div class="priority-container step-container" id="step3" style="display: none;">
                 </div>
 
                 <div class="buttons-container">
-                    <button class="back-button" style="display: none;">Back</button>
-                    <button class="next-button">Next</button>
-
-                    <button id="submitButton" style="display: none;">Submit</button>
+                    <button type="button" id="back-button" style="display: none;">Back</button>
+                    <button type="button" id="next-button" style="display: none;">Next</button>
+                    <button type="submit" id="submit-button" style="display: none;">Submit</button>
                 </div>
+
                 
             
             </form>
@@ -88,6 +88,7 @@
     };
   </script>
   <script src="{{ url_for('panel_static', path='/js/burgerToggle.js') }}"></script>
+  <script src="{{ url_for('panel_static', path='/js/stageHandler.js') }}"></script>
   <script src="{{ url_for('panel_static', path='/js/generateFields.js') }}"></script>
 
 </body>

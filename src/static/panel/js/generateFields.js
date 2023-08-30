@@ -1,35 +1,39 @@
+const formData = {
+    file: null,
+    allOptionsSelected: false
+};
+
 document.addEventListener("DOMContentLoaded", function () {
     const csvFileInput = document.getElementById("csvFile");
     const mappingContainer = document.querySelector(".mapping-container");
     const priorityContainer = document.querySelector(".priority-container");
-
+    const nextButton = document.getElementById("next-button");
 
     csvFileInput.addEventListener("change", function () {
         mappingContainer.innerHTML = "";
         priorityContainer.innerHTML = "";
 
-        const file = csvFileInput.files[0];
+        formData.file = csvFileInput.files[0];
         const reader = new FileReader();
 
         reader.onload = function (event) {
-            const contents = event.target.result;
-            const lines = contents.split("\n");
-            const headers = lines[0].split(",");
+            const contents = event.target.result.split("\n");
+            const headers = contents[0].split(",");
             const numColumns = headers.length;
 
             let currentPriority = 1;
 
             for (let i = 0; i < numColumns; i++) {
                 const header = headers[i];
-                const mapColumnHTML = document.createElement("div");
-                const priorColumnHTML = document.createElement("div");
-                mapColumnHTML.className = "mapfield-container";
-                priorColumnHTML.className = "mapfield-container";
-                const readonlyField = `<p>${header}</p>`;
-                mapColumnHTML.innerHTML = `
+                const mapFieldHTML = document.createElement("div");
+                const priorFieldHTML = document.createElement("div");
+                mapFieldHTML.className = "mapfield-container";
+                priorFieldHTML.className = "mapfield-container";
+                const columnNameHTML = `<p>${header}</p>`;
+                mapFieldHTML.innerHTML = `
                     <div class="mapfield-wrapper">
                         <img class="map-icon" src=${imagePaths.chain}></img>
-                        ${readonlyField}
+                        ${columnNameHTML}
                     </div>
                     <select>
                         <option value="" hidden selected>Select an option</option>
@@ -39,35 +43,68 @@ document.addEventListener("DOMContentLoaded", function () {
                         <option value="angelco">Angel.co</option>
                     </select>
                 `;
-                priorColumnHTML.innerHTML = `
-                <div class="mapfield-ineed">
-                    ${readonlyField}
-                    <div class="mapfield-ineed__controller">
-                        <p>Priority:</p>
-                        <select data-priority=${currentPriority}>
-                            ${generatePriorityOptions(currentPriority, numColumns)}
-                        </select>
+                priorFieldHTML.innerHTML = `
+                    <div class="mapfield-ineed">
+                        ${columnNameHTML}
+                        <div class="mapfield-ineed__controller">
+                            <p>Priority:</p>
+                            <select data-priority=${currentPriority}>
+                                ${generatePriorityOptions(currentPriority, numColumns)}
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="needer">
-                    <p>Need Scraping:</p>
-                    <input type="checkbox" checked>
-                </div>
+                    <div class="needer">
+                        <p>Need Scraping:</p>
+                        <input type="checkbox" checked>
+                    </div>
                 `;
-                mappingContainer.appendChild(mapColumnHTML);
-                priorityContainer.appendChild(priorColumnHTML);
+
+                const mapSelect = mapFieldHTML.querySelector("select");
+                mapSelect.addEventListener("change", () => {
+                    formData.allOptionsSelected = Array.from(
+                        mappingContainer.querySelectorAll("select")
+                    ).every(select => select.value !== "");
+                    nextButton.style.display = formData.allOptionsSelected ? "block" : "none";
+                });
+
+                // const priorSelect = priorFieldHTML.querySelector("select");
+                // priorSelect.addEventListener("change", () => {
+
+                //     // console.log(priorSelect);
+                //     // console.log(priorSelect.value);
+                //     // priorSelect.value = "4"
+                //     // console.log(priorSelect.value);
+
+                //     const selects = priorityContainer.querySelectorAll("select")
+                //     const selectedValue = priorSelect.value;
+                //     selects.forEach(select => {
+                //         if (select !== priorSelect) {
+                //             if (select.value === selectedValue) {
+                //                 const swapValue = select.value;
+                //                 select.value = priorSelect.value;
+                //                 priorSelect.value = swapValue;
+                //             }
+                //         }
+                //     });
+                // })
+
+                mappingContainer.appendChild(mapFieldHTML);
+                priorityContainer.appendChild(priorFieldHTML);
 
                 currentPriority++; 
             }
+            nextButton.style.display = formData.file ? "block" : "none";
         };
-        reader.readAsText(file);
+        reader.readAsText(formData.file);
     });
+
+    
 });
 
 function generatePriorityOptions(currentPriority, numColumns) {
     let options = '';
     for (let i = 1; i <= numColumns; i++) {
-        options += `<option value="${i}" ${i === currentPriority ? 'selected' : ''}>${i}</option>`;
+        options += `<option value=${i} ${i === currentPriority ? 'selected' : ''}>${i}</option>`;
     }
     return options;
 }
