@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const mappingContainer = document.querySelector(".mapping-container");
     const priorityContainer = document.querySelector(".priority-container");
     const nextButton = document.getElementById("next-button");
+    const submitButton = document.getElementById("submit-button");
 
     csvFileInput.addEventListener("change", function () {
         mappingContainer.innerHTML = "";
@@ -67,26 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     nextButton.style.display = formData.allOptionsSelected ? "block" : "none";
                 });
 
-                // const priorSelect = priorFieldHTML.querySelector("select");
-                // priorSelect.addEventListener("change", () => {
-
-                //     // console.log(priorSelect);
-                //     // console.log(priorSelect.value);
-                //     // priorSelect.value = "4"
-                //     // console.log(priorSelect.value);
-
-                //     const selects = priorityContainer.querySelectorAll("select")
-                //     const selectedValue = priorSelect.value;
-                //     selects.forEach(select => {
-                //         if (select !== priorSelect) {
-                //             if (select.value === selectedValue) {
-                //                 const swapValue = select.value;
-                //                 select.value = priorSelect.value;
-                //                 priorSelect.value = swapValue;
-                //             }
-                //         }
-                //     });
-                // })
+                const priorSelect = priorFieldHTML.querySelector("select");
+                priorSelect.addEventListener("change", () => {
+                    const selectsValues = Array.from(
+                        priorityContainer.querySelectorAll("select")
+                    ).map(select => select.value);
+                    const hasDuplicates = selectsValues.length !== new Set(selectsValues).size;
+                    submitButton.style.display = hasDuplicates ? "none" : "block"
+                })
 
                 mappingContainer.appendChild(mapFieldHTML);
                 priorityContainer.appendChild(priorFieldHTML);
