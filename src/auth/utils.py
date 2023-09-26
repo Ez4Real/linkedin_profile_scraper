@@ -37,12 +37,11 @@ def set_success_message(request: Request, message: str) -> None:
     request.session['success_message'] = message
     
 
-def pop_get_error_message(request: Request) -> None:
+def pop_error_message(request: Request) -> None:
     return request.session.pop('error_message', None)
 
-def pop_get_error_messages(request: Request) -> None:
+def pop_error_messages(request: Request) -> None:
     return request.session.pop('error_messages', None)
 
-
-def pop_get_success_message(request: Request) -> None:
+def pop_success_message(request: Request) -> None:
     return request.session.pop('success_message', None)

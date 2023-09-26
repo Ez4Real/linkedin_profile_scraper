@@ -44,8 +44,3 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.style.display = currentStep === 2 ? "block" : "none";
     }
 });
-
-
-function updateButtonVisibility() {
-    
-}

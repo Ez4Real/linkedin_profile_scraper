@@ -1,12 +1,12 @@
 import re
 
-from pydantic import BaseModel, EmailStr, Field, validator
+from pydantic import BaseModel, EmailStr, SecretStr, Field, validator
 
 from config import ALLOWED_EMAIL_DOMAINS
 
 class UserSignUp(BaseModel):
     email: EmailStr = Field(...)
-    password: str = Field(...)
+    password: SecretStr = Field(...)
     
     @validator('email')
     def validate_email(cls, value):

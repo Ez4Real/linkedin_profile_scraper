@@ -5,8 +5,8 @@ from fastapi.templating import Jinja2Templates
 from .models import UserSignUp
 from .security import create_access_token, create_refresh_token
 from .service import create_user, get_user_by_email
-from .utils import (pop_get_error_message, pop_get_error_messages,
-                    pop_get_success_message, set_error_message,
+from .utils import (pop_error_message, pop_error_messages,
+                    pop_success_message, set_error_message,
                     set_error_messages, set_secure_cookie, set_success_message,
                     verify_password)
 
@@ -19,7 +19,7 @@ LOGIN_REDIRECT = RedirectResponse(url='/auth/login', status_code=302)
 
 @auth_router.get('/signup', response_class=HTMLResponse)
 async def get_signup(request: Request):
-    messages = pop_get_error_messages(request)
+    messages = pop_error_messages(request)
     
     return templates.TemplateResponse(
         'sign_up.html',
@@ -49,14 +49,14 @@ async def post_signup(request: Request,
 
 @auth_router.get('/login', response_class=HTMLResponse)
 async def get_login(request: Request,
-                    message: str = None):
-    error_message = pop_get_error_message(request)
+                    success_message: str = None):
+    error_message = pop_error_message(request)
     if not error_message:
-        message = pop_get_success_message(request)
+        success_message = pop_success_message(request)
         
     return templates.TemplateResponse(
         'login.html',
-        {'request': request, 'message': message, 'error_message': error_message}
+        {'request': request, 'message': success_message, 'error_message': error_message}
     )
 
 @auth_router.post('/login')
@@ -77,7 +77,7 @@ async def post_login(request: Request,
             set_secure_cookie(response, "RefreshToken", refresh_token)
             return response
             
-    return LOGIN_REDIRECT
+    return {}
 
 
 
