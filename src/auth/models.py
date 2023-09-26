@@ -6,7 +6,7 @@ from config import ALLOWED_EMAIL_DOMAINS
 
 class UserSignUp(BaseModel):
     email: EmailStr = Field(...)
-    password: SecretStr = Field(...)
+    password: str = Field(...)
     
     @validator('email')
     def validate_email(cls, value):
