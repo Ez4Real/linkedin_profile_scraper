@@ -8,7 +8,7 @@ from fastapi.security.utils import get_authorization_scheme_param
 from jose import JWTError, jwt
 from pydantic import ValidationError
 
-from config import (JWT_SECRET, JWT_REFRESH_SECRET, HASH_ALGORITHM,
+from ..config import (JWT_SECRET, JWT_REFRESH_SECRET, HASH_ALGORITHM,
                     ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_MINUTES)
 
 from .schemas import TokenPayload

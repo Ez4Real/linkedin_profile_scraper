@@ -3,7 +3,7 @@ from typing import List
 from fastapi import Request, Response
 from passlib.context import CryptContext
 
-from config import DEBUG
+from ..config import DEBUG
 
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

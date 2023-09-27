@@ -2,7 +2,7 @@ import re
 
 from pydantic import BaseModel, EmailStr, SecretStr, Field, validator
 
-from config import ALLOWED_EMAIL_DOMAINS
+from ..config import ALLOWED_EMAIL_DOMAINS
 
 class UserSignUp(BaseModel):
     email: EmailStr = Field(...)

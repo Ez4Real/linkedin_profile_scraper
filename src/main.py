@@ -17,8 +17,8 @@ app.add_middleware(CORSMiddleware,
                    allow_methods=["*"],
                    allow_headers=["*"])
 
-app.mount("/static/panel/", StaticFiles(directory="static/panel"), name="panel_static")
-app.mount("/static/auth/", StaticFiles(directory="static/auth"), name="auth_static")
+app.mount("/static/panel/", StaticFiles(directory="src/static/panel"), name="panel_static")
+app.mount("/static/auth/", StaticFiles(directory="src/static/auth"), name="auth_static")
 
 app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 

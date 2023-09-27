@@ -1,6 +1,6 @@
 from pydantic import EmailStr
 
-from database import user_collection
+from ..database import user_collection
 
 from .models import UserInDB
 from .utils import hash_password

@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
-from config import DB_NAME, DB_USER, DB_PASSWORD, dotenv_path
+from .config import DB_NAME, DB_USER, DB_PASSWORD, dotenv_path
 
 load_dotenv(dotenv_path)
 

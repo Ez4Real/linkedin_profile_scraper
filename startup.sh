@@ -1,1 +1,1 @@
-uvicorn main:app
+uvicorn src.main:app

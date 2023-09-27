@@ -11,7 +11,7 @@ from .utils import (pop_error_message, pop_error_messages,
                     verify_password)
 
 auth_router = APIRouter()
-templates = Jinja2Templates(directory='templates/auth')
+templates = Jinja2Templates(directory='src/templates/auth')
 
 
 LOGIN_REDIRECT = RedirectResponse(url='/auth/login', status_code=302)
