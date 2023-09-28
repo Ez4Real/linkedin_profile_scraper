@@ -77,7 +77,7 @@ async def post_login(request: Request,
             set_secure_cookie(response, "RefreshToken", refresh_token)
             return response
             
-    return {}
+    return LOGIN_REDIRECT
 
 
 
